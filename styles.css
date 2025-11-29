@@ -36,19 +36,20 @@ h1 {
 .game-info {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 15px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
-.moves-counter, .level-display {
+.moves-counter, .level-display, .optimal-display {
     color: #fff;
-    font-size: 1.2rem;
+    font-size: 1rem;
     background: rgba(255, 255, 255, 0.1);
-    padding: 10px 20px;
+    padding: 8px 16px;
     border-radius: 25px;
 }
 
-.moves-counter span, .level-display span {
+.moves-counter span, .level-display span, .optimal-display span {
     color: #4ecca3;
     font-weight: bold;
 }
@@ -229,6 +230,130 @@ h1 {
     border-color: #3db892;
 }
 
+.btn-hint {
+    background: rgba(241, 196, 15, 0.2);
+    border-color: #f1c40f;
+    color: #f1c40f;
+}
+
+.btn-hint:hover {
+    background: rgba(241, 196, 15, 0.3);
+}
+
+.btn-small {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+/* Solution Panel */
+.solution-panel {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: left;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.solution-panel.hidden {
+    display: none;
+}
+
+.solution-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.solution-header h3 {
+    color: #4ecca3;
+    margin: 0;
+}
+
+.solution-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.solution-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.solution-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.solution-step:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+}
+
+.step-number {
+    color: #a0a0a0;
+    font-weight: bold;
+    min-width: 25px;
+}
+
+.step-vehicle {
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #fff;
+    min-width: 30px;
+    text-align: center;
+}
+
+.step-vehicle.red { background: #e74c3c; }
+.step-vehicle.blue { background: #3498db; }
+.step-vehicle.green { background: #2ecc71; }
+.step-vehicle.yellow { background: #f1c40f; color: #333; }
+.step-vehicle.purple { background: #9b59b6; }
+.step-vehicle.orange { background: #e67e22; }
+.step-vehicle.pink { background: #e84393; }
+.step-vehicle.cyan { background: #00cec9; }
+.step-vehicle.lime { background: #88d8b0; color: #333; }
+.step-vehicle.brown { background: #8b4513; }
+
+.step-direction {
+    color: #fff;
+    flex: 1;
+}
+
+.step-distance {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+}
+
+.solution-info {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Vehicle ID label */
+.vehicle-id {
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.8);
+}
+
 .win-message {
     position: fixed;
     top: 50%;
@@ -251,6 +376,17 @@ h1 {
 .win-message p {
     color: #fff;
     font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.win-message .optimal-info {
+    color: #a0a0a0;
+    font-size: 1rem;
+}
+
+.win-message .win-rating {
+    color: #f1c40f;
+    font-size: 1.3rem;
     margin-bottom: 20px;
 }
 

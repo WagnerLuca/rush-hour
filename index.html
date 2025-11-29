@@ -14,6 +14,7 @@
         <div class="game-info">
             <div class="moves-counter">Moves: <span id="moves">0</span></div>
             <div class="level-display">Level: <span id="level">1</span></div>
+            <div class="optimal-display">Optimal: <span id="optimal">-</span></div>
         </div>
         
         <div class="board-container">
@@ -24,14 +25,31 @@
         </div>
         
         <div class="controls">
-            <button id="resetBtn" class="btn">🔄 Reset Level</button>
-            <button id="prevLevelBtn" class="btn">◀ Previous</button>
+            <button id="resetBtn" class="btn">🔄 Reset</button>
+            <button id="prevLevelBtn" class="btn">◀ Prev</button>
             <button id="nextLevelBtn" class="btn">Next ▶</button>
+            <button id="hintBtn" class="btn btn-hint">💡 Solution</button>
+        </div>
+        
+        <!-- Solution Panel -->
+        <div id="solutionPanel" class="solution-panel hidden">
+            <div class="solution-header">
+                <h3>📋 Optimal Solution</h3>
+                <div class="solution-controls">
+                    <button id="playBtn" class="btn btn-small">▶ Play</button>
+                    <button id="closeSolutionBtn" class="btn btn-small">✕ Close</button>
+                </div>
+            </div>
+            <div id="solutionSteps" class="solution-steps">
+                <!-- Steps will be added by JavaScript -->
+            </div>
         </div>
         
         <div id="winMessage" class="win-message hidden">
             <h2>🎉 Congratulations!</h2>
             <p>You solved it in <span id="winMoves">0</span> moves!</p>
+            <p class="optimal-info">Optimal: <span id="winOptimal">0</span> moves</p>
+            <p id="winRating" class="win-rating"></p>
             <button id="nextLevelWinBtn" class="btn btn-primary">Next Level →</button>
         </div>
     </div>
