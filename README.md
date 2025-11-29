@@ -1,4 +1,4 @@
-"# 🚗 Rush Hour - Sliding Block Puzzle Game
+# 🚗 Rush Hour - Sliding Block Puzzle Game
 
 A web-based implementation of the classic Rush Hour puzzle game. Move the red car to the exit by sliding other vehicles out of the way!
 
@@ -53,4 +53,4 @@ rush-hour/
 
 ## 📝 License
 
-MIT License" 
+MIT License

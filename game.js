@@ -30,15 +30,15 @@ class RushHourGame {
     
     createLevels() {
         // Each level defines vehicles with: id, row, col, length, orientation ('h' or 'v'), color
-        // The red car (id: 'X') is always the target and must reach column 5 on row 2
+        // The red car (id: 'X') is always the target and must reach column 4 on row 2 (exit row)
         return [
             // Level 1 - Easy
             {
                 vehicles: [
                     { id: 'X', row: 2, col: 0, length: 2, orientation: 'h', color: 'red' },
-                    { id: 'A', row: 0, col: 0, length: 3, orientation: 'v', color: 'blue' },
+                    { id: 'A', row: 0, col: 0, length: 2, orientation: 'v', color: 'blue' },
                     { id: 'B', row: 0, col: 3, length: 2, orientation: 'h', color: 'green' },
-                    { id: 'C', row: 1, col: 5, length: 3, orientation: 'v', color: 'yellow' },
+                    { id: 'C', row: 1, col: 5, length: 2, orientation: 'v', color: 'yellow' },
                     { id: 'D', row: 3, col: 2, length: 2, orientation: 'v', color: 'purple' },
                     { id: 'E', row: 5, col: 0, length: 3, orientation: 'h', color: 'orange' }
                 ]
@@ -46,11 +46,11 @@ class RushHourGame {
             // Level 2
             {
                 vehicles: [
-                    { id: 'X', row: 2, col: 1, length: 2, orientation: 'h', color: 'red' },
+                    { id: 'X', row: 2, col: 0, length: 2, orientation: 'h', color: 'red' },
                     { id: 'A', row: 0, col: 0, length: 2, orientation: 'v', color: 'blue' },
                     { id: 'B', row: 0, col: 1, length: 2, orientation: 'h', color: 'green' },
-                    { id: 'C', row: 0, col: 3, length: 3, orientation: 'v', color: 'yellow' },
-                    { id: 'D', row: 1, col: 4, length: 2, orientation: 'h', color: 'purple' },
+                    { id: 'C', row: 0, col: 4, length: 3, orientation: 'v', color: 'yellow' },
+                    { id: 'D', row: 1, col: 1, length: 2, orientation: 'v', color: 'purple' },
                     { id: 'E', row: 3, col: 0, length: 3, orientation: 'h', color: 'orange' },
                     { id: 'F', row: 4, col: 2, length: 2, orientation: 'v', color: 'pink' },
                     { id: 'G', row: 3, col: 5, length: 3, orientation: 'v', color: 'cyan' }
@@ -63,12 +63,13 @@ class RushHourGame {
                     { id: 'A', row: 0, col: 0, length: 2, orientation: 'h', color: 'blue' },
                     { id: 'B', row: 0, col: 2, length: 2, orientation: 'v', color: 'green' },
                     { id: 'C', row: 0, col: 3, length: 2, orientation: 'v', color: 'yellow' },
-                    { id: 'D', row: 0, col: 4, length: 3, orientation: 'v', color: 'purple' },
+                    { id: 'D', row: 0, col: 4, length: 2, orientation: 'v', color: 'purple' },
                     { id: 'E', row: 1, col: 0, length: 2, orientation: 'h', color: 'orange' },
-                    { id: 'F', row: 2, col: 3, length: 3, orientation: 'h', color: 'pink' },
+                    { id: 'F', row: 2, col: 4, length: 2, orientation: 'v', color: 'pink' },
                     { id: 'G', row: 3, col: 0, length: 2, orientation: 'v', color: 'cyan' },
                     { id: 'H', row: 3, col: 1, length: 2, orientation: 'v', color: 'lime' },
-                    { id: 'I', row: 4, col: 3, length: 2, orientation: 'h', color: 'brown' }
+                    { id: 'I', row: 4, col: 3, length: 2, orientation: 'h', color: 'brown' },
+                    { id: 'J', row: 5, col: 0, length: 2, orientation: 'h', color: 'blue' }
                 ]
             },
             // Level 4 - Medium
@@ -82,24 +83,24 @@ class RushHourGame {
                     { id: 'E', row: 2, col: 3, length: 2, orientation: 'v', color: 'orange' },
                     { id: 'F', row: 3, col: 1, length: 2, orientation: 'h', color: 'pink' },
                     { id: 'G', row: 4, col: 0, length: 2, orientation: 'h', color: 'cyan' },
-                    { id: 'H', row: 4, col: 3, length: 3, orientation: 'h', color: 'lime' },
+                    { id: 'H', row: 4, col: 3, length: 2, orientation: 'h', color: 'lime' },
                     { id: 'I', row: 5, col: 1, length: 2, orientation: 'h', color: 'brown' }
                 ]
             },
             // Level 5
             {
                 vehicles: [
-                    { id: 'X', row: 2, col: 1, length: 2, orientation: 'h', color: 'red' },
+                    { id: 'X', row: 2, col: 0, length: 2, orientation: 'h', color: 'red' },
                     { id: 'A', row: 0, col: 0, length: 2, orientation: 'v', color: 'blue' },
                     { id: 'B', row: 0, col: 1, length: 3, orientation: 'h', color: 'green' },
-                    { id: 'C', row: 0, col: 4, length: 3, orientation: 'v', color: 'yellow' },
+                    { id: 'C', row: 0, col: 4, length: 2, orientation: 'v', color: 'yellow' },
                     { id: 'D', row: 1, col: 1, length: 2, orientation: 'v', color: 'purple' },
-                    { id: 'E', row: 1, col: 2, length: 2, orientation: 'h', color: 'orange' },
-                    { id: 'F', row: 2, col: 5, length: 2, orientation: 'v', color: 'pink' },
-                    { id: 'G', row: 3, col: 0, length: 3, orientation: 'h', color: 'cyan' },
-                    { id: 'H', row: 3, col: 3, length: 2, orientation: 'v', color: 'lime' },
-                    { id: 'I', row: 4, col: 1, length: 2, orientation: 'v', color: 'brown' },
-                    { id: 'J', row: 5, col: 2, length: 3, orientation: 'h', color: 'blue' }
+                    { id: 'E', row: 2, col: 3, length: 3, orientation: 'v', color: 'orange' },
+                    { id: 'F', row: 2, col: 4, length: 2, orientation: 'v', color: 'pink' },
+                    { id: 'G', row: 3, col: 0, length: 2, orientation: 'h', color: 'cyan' },
+                    { id: 'H', row: 4, col: 1, length: 2, orientation: 'v', color: 'lime' },
+                    { id: 'I', row: 5, col: 2, length: 2, orientation: 'h', color: 'brown' },
+                    { id: 'J', row: 5, col: 4, length: 2, orientation: 'h', color: 'blue' }
                 ]
             },
             // Level 6 - Hard
@@ -110,11 +111,11 @@ class RushHourGame {
                     { id: 'B', row: 0, col: 1, length: 2, orientation: 'h', color: 'green' },
                     { id: 'C', row: 0, col: 3, length: 2, orientation: 'h', color: 'yellow' },
                     { id: 'D', row: 0, col: 5, length: 2, orientation: 'v', color: 'purple' },
-                    { id: 'E', row: 1, col: 1, length: 3, orientation: 'v', color: 'orange' },
+                    { id: 'E', row: 1, col: 1, length: 2, orientation: 'v', color: 'orange' },
                     { id: 'F', row: 1, col: 3, length: 2, orientation: 'v', color: 'pink' },
                     { id: 'G', row: 2, col: 2, length: 3, orientation: 'v', color: 'cyan' },
-                    { id: 'H', row: 2, col: 4, length: 2, orientation: 'h', color: 'lime' },
-                    { id: 'I', row: 3, col: 3, length: 3, orientation: 'h', color: 'brown' },
+                    { id: 'H', row: 2, col: 4, length: 2, orientation: 'v', color: 'lime' },
+                    { id: 'I', row: 3, col: 3, length: 2, orientation: 'h', color: 'brown' },
                     { id: 'J', row: 4, col: 0, length: 2, orientation: 'h', color: 'blue' },
                     { id: 'K', row: 5, col: 0, length: 3, orientation: 'h', color: 'green' },
                     { id: 'L', row: 4, col: 4, length: 2, orientation: 'v', color: 'yellow' }
@@ -341,8 +342,26 @@ class RushHourGame {
         // Red car needs to be at column 4 (so it extends to column 5, the exit)
         const redCar = this.vehicles.find(v => v.isRed);
         if (redCar && redCar.col === 4) {
-            this.showWinMessage();
+            this.animateCarExit(redCar);
         }
+    }
+    
+    animateCarExit(redCar) {
+        // Disable dragging during animation
+        this.dragging = null;
+        
+        // Add transition for smooth animation
+        redCar.element.style.transition = 'left 0.8s ease-in-out';
+        
+        // Animate car driving off to the right
+        const exitPosition = this.boardPadding + 8 * this.cellSize; // Move past the board
+        redCar.element.style.left = `${exitPosition}px`;
+        
+        // Show win message after animation
+        setTimeout(() => {
+            redCar.element.style.transition = '';
+            this.showWinMessage();
+        }, 800);
     }
     
     showWinMessage() {
