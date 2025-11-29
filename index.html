@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rush Hour - Sliding Block Puzzle</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>🚗 Rush Hour</h1>
+        <p class="instructions">Move the red car to the exit! Drag vehicles to slide them.</p>
+        
+        <div class="game-info">
+            <div class="moves-counter">Moves: <span id="moves">0</span></div>
+            <div class="level-display">Level: <span id="level">1</span></div>
+        </div>
+        
+        <div class="board-container">
+            <div class="board" id="board">
+                <!-- Grid cells and vehicles will be added by JavaScript -->
+            </div>
+            <div class="exit-marker">EXIT →</div>
+        </div>
+        
+        <div class="controls">
+            <button id="resetBtn" class="btn">🔄 Reset Level</button>
+            <button id="prevLevelBtn" class="btn">◀ Previous</button>
+            <button id="nextLevelBtn" class="btn">Next ▶</button>
+        </div>
+        
+        <div id="winMessage" class="win-message hidden">
+            <h2>🎉 Congratulations!</h2>
+            <p>You solved it in <span id="winMoves">0</span> moves!</p>
+            <button id="nextLevelWinBtn" class="btn btn-primary">Next Level →</button>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>

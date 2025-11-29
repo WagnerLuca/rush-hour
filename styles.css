@@ -1,0 +1,312 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.game-container {
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+h1 {
+    color: #fff;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.instructions {
+    color: #a0a0a0;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.game-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.moves-counter, .level-display {
+    color: #fff;
+    font-size: 1.2rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.moves-counter span, .level-display span {
+    color: #4ecca3;
+    font-weight: bold;
+}
+
+.board-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(6, 60px);
+    grid-template-rows: repeat(6, 60px);
+    gap: 2px;
+    background: #2d3436;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.cell {
+    background: #636e72;
+    border-radius: 5px;
+}
+
+.exit-marker {
+    position: absolute;
+    right: -70px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 1rem;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.vehicle {
+    position: absolute;
+    border-radius: 8px;
+    cursor: grab;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    transition: box-shadow 0.2s;
+    user-select: none;
+    z-index: 10;
+}
+
+.vehicle:hover {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+.vehicle:active {
+    cursor: grabbing;
+}
+
+.vehicle.horizontal {
+    height: 56px;
+}
+
+.vehicle.vertical {
+    width: 56px;
+}
+
+.vehicle.length-2.horizontal {
+    width: 120px;
+}
+
+.vehicle.length-3.horizontal {
+    width: 182px;
+}
+
+.vehicle.length-2.vertical {
+    height: 120px;
+}
+
+.vehicle.length-3.vertical {
+    height: 182px;
+}
+
+/* Vehicle colors */
+.vehicle.red {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    border: 2px solid #a93226;
+}
+
+.vehicle.blue {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    border: 2px solid #1f618d;
+}
+
+.vehicle.green {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    border: 2px solid #1e8449;
+}
+
+.vehicle.yellow {
+    background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
+    border: 2px solid #d68910;
+}
+
+.vehicle.purple {
+    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+    border: 2px solid #7d3c98;
+}
+
+.vehicle.orange {
+    background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+    border: 2px solid #a04000;
+}
+
+.vehicle.pink {
+    background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+    border: 2px solid #c23074;
+}
+
+.vehicle.cyan {
+    background: linear-gradient(135deg, #00cec9 0%, #00b894 100%);
+    border: 2px solid #009688;
+}
+
+.vehicle.lime {
+    background: linear-gradient(135deg, #a8e6cf 0%, #88d8b0 100%);
+    border: 2px solid #6bc99a;
+}
+
+.vehicle.brown {
+    background: linear-gradient(135deg, #a0522d 0%, #8b4513 100%);
+    border: 2px solid #704214;
+}
+
+.vehicle.truck {
+    font-size: 1.8rem;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 24px;
+    font-size: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: #4ecca3;
+    border-color: #4ecca3;
+    color: #1a1a2e;
+}
+
+.btn-primary:hover {
+    background: #3db892;
+    border-color: #3db892;
+}
+
+.win-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    z-index: 100;
+    border: 2px solid #4ecca3;
+}
+
+.win-message h2 {
+    color: #4ecca3;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.win-message p {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.win-message.hidden {
+    display: none;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 99;
+}
+
+.overlay.hidden {
+    display: none;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .board {
+        grid-template-columns: repeat(6, 50px);
+        grid-template-rows: repeat(6, 50px);
+    }
+    
+    .vehicle.horizontal {
+        height: 46px;
+    }
+    
+    .vehicle.vertical {
+        width: 46px;
+    }
+    
+    .vehicle.length-2.horizontal {
+        width: 100px;
+    }
+    
+    .vehicle.length-3.horizontal {
+        width: 152px;
+    }
+    
+    .vehicle.length-2.vertical {
+        height: 100px;
+    }
+    
+    .vehicle.length-3.vertical {
+        height: 152px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .exit-marker {
+        right: -50px;
+        font-size: 0.8rem;
+    }
+}
