@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  rush-hour:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rush-hour-game:latest
+    container_name: rush-hour-game
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    labels:
+      - "app=rush-hour"
+      - "environment=production"
+
+  # Optional: Use pre-built image from GitHub Container Registry
+  # rush-hour-ghcr:
+  #   image: ghcr.io/wagnerluca/rush-hour:latest
+  #   container_name: rush-hour-ghcr
+  #   ports:
+  #     - "8081:80"
+  #   restart: unless-stopped
+
+networks:
+  default:
+    name: rush-hour-network

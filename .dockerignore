@@ -1,0 +1,30 @@
+# Git
+.git
+.gitignore
+
+# GitHub
+.github
+
+# Documentation
+README.md
+LICENSE
+
+# Development tools
+level-tester.js
+level-tools.html
+node_modules
+
+# Docker files (not needed inside container)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

@@ -479,7 +479,9 @@ const filteredArgs = args.filter(arg => arg !== '--save' && arg !== '-s');
 
 switch (command) {
     case 'test':
-        testLevels();
+        const allValid = testLevels();
+        // Exit with error code if any level is invalid (for CI/CD)
+        process.exit(allValid ? 0 : 1);
         break;
     
     case 'generate':

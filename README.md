@@ -162,7 +162,63 @@ This ensures:
 6. Repeat until valid level found
 ```
 
-## 📝 License
+## � Docker
+
+### Using Docker Compose (Recommended)
+
+```bash
+# Build and run
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop
+docker-compose down
+```
+
+The game will be available at: http://localhost:8080
+
+### Using Docker Directly
+
+```bash
+# Build the image
+docker build -t rush-hour-game .
+
+# Run the container
+docker run -d -p 8080:80 --name rush-hour rush-hour-game
+
+# Stop and remove
+docker stop rush-hour && docker rm rush-hour
+```
+
+### Pull from GitHub Container Registry
+
+```bash
+# Pull the latest image
+docker pull ghcr.io/wagnerluca/rush-hour:latest
+
+# Run from registry
+docker run -d -p 8080:80 ghcr.io/wagnerluca/rush-hour:latest
+```
+
+## 🔄 CI/CD Pipeline
+
+The project includes a GitHub Actions workflow that:
+
+1. **Validates Levels** - Runs the level tester to ensure all puzzles are valid and solvable
+2. **Builds Docker Image** - Creates an optimized nginx-based container
+3. **Pushes to Registry** - Publishes to GitHub Container Registry (ghcr.io)
+
+### Pipeline Triggers
+- Push to `main` or `master` branch
+- Pull requests to `main` or `master`
+- Manual trigger via workflow dispatch
+
+### Pipeline Status
+![CI/CD](https://github.com/WagnerLuca/rush-hour/actions/workflows/ci-cd.yml/badge.svg)
+
+## �📝 License
 
 MIT License
 
