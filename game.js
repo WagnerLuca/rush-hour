@@ -194,102 +194,12 @@ class RushHourGame {
         this.vehicleStartX = 0;
         this.vehicleStartY = 0;
         
-        this.levels = this.createLevels();
+        this.levels = RUSH_HOUR_LEVELS;
         
         this.initBoard();
         this.validateAllLevels();
         this.loadLevel(this.currentLevel);
         this.setupEventListeners();
-    }
-    
-    createLevels() {
-        // Carefully designed levels - all validated and solvable
-        return [
-            // Level 1 - Easy
-            {
-                vehicles: [
-                    { id: 'X', row: 2, col: 1, length: 2, orientation: 'h', color: 'red' },
-                    { id: 'A', row: 0, col: 0, length: 3, orientation: 'v', color: 'yellow' },
-                    { id: 'B', row: 0, col: 1, length: 2, orientation: 'h', color: 'green' },
-                    { id: 'C', row: 1, col: 3, length: 2, orientation: 'v', color: 'purple' },
-                    { id: 'D', row: 3, col: 0, length: 3, orientation: 'h', color: 'blue' },
-                    { id: 'E', row: 3, col: 3, length: 3, orientation: 'v', color: 'orange' }
-                ]
-            },
-            // Level 2 - Easy
-            {
-                vehicles: [
-                    { id: 'X', row: 2, col: 0, length: 2, orientation: 'h', color: 'red' },
-                    { id: 'A', row: 0, col: 2, length: 3, orientation: 'v', color: 'yellow' },
-                    { id: 'B', row: 0, col: 3, length: 2, orientation: 'h', color: 'green' },
-                    { id: 'C', row: 0, col: 5, length: 3, orientation: 'v', color: 'purple' },
-                    { id: 'D', row: 3, col: 3, length: 2, orientation: 'h', color: 'blue' },
-                    { id: 'E', row: 4, col: 2, length: 2, orientation: 'v', color: 'orange' }
-                ]
-            },
-            // Level 3 - Medium
-            {
-                vehicles: [
-                    { id: 'X', row: 2, col: 0, length: 2, orientation: 'h', color: 'red' },
-                    { id: 'A', row: 0, col: 0, length: 2, orientation: 'v', color: 'blue' },
-                    { id: 'B', row: 0, col: 1, length: 2, orientation: 'h', color: 'green' },
-                    { id: 'C', row: 1, col: 2, length: 2, orientation: 'v', color: 'yellow' },
-                    { id: 'D', row: 0, col: 4, length: 2, orientation: 'v', color: 'purple' },
-                    { id: 'E', row: 2, col: 3, length: 3, orientation: 'v', color: 'orange' },
-                    { id: 'F', row: 3, col: 0, length: 2, orientation: 'h', color: 'pink' },
-                    { id: 'G', row: 4, col: 1, length: 2, orientation: 'v', color: 'cyan' },
-                    { id: 'H', row: 5, col: 3, length: 2, orientation: 'h', color: 'lime' }
-                ]
-            },
-            // Level 4 - Medium
-            {
-                vehicles: [
-                    { id: 'X', row: 2, col: 0, length: 2, orientation: 'h', color: 'red' },
-                    { id: 'A', row: 0, col: 0, length: 2, orientation: 'h', color: 'blue' },
-                    { id: 'B', row: 0, col: 2, length: 2, orientation: 'v', color: 'green' },
-                    { id: 'C', row: 0, col: 3, length: 3, orientation: 'v', color: 'yellow' },
-                    { id: 'D', row: 1, col: 0, length: 2, orientation: 'h', color: 'purple' },
-                    { id: 'E', row: 2, col: 4, length: 2, orientation: 'v', color: 'orange' },
-                    { id: 'F', row: 3, col: 0, length: 2, orientation: 'v', color: 'pink' },
-                    { id: 'G', row: 3, col: 1, length: 2, orientation: 'h', color: 'cyan' },
-                    { id: 'H', row: 4, col: 4, length: 2, orientation: 'v', color: 'lime' },
-                    { id: 'I', row: 5, col: 0, length: 3, orientation: 'h', color: 'brown' }
-                ]
-            },
-            // Level 5 - Hard
-            {
-                vehicles: [
-                    { id: 'X', row: 2, col: 1, length: 2, orientation: 'h', color: 'red' },
-                    { id: 'A', row: 0, col: 0, length: 3, orientation: 'v', color: 'blue' },
-                    { id: 'B', row: 0, col: 1, length: 2, orientation: 'h', color: 'green' },
-                    { id: 'C', row: 0, col: 3, length: 2, orientation: 'v', color: 'yellow' },
-                    { id: 'D', row: 0, col: 5, length: 3, orientation: 'v', color: 'purple' },
-                    { id: 'E', row: 1, col: 1, length: 2, orientation: 'v', color: 'orange' },
-                    { id: 'F', row: 2, col: 4, length: 2, orientation: 'v', color: 'pink' },
-                    { id: 'G', row: 3, col: 1, length: 3, orientation: 'h', color: 'cyan' },
-                    { id: 'H', row: 4, col: 0, length: 2, orientation: 'h', color: 'lime' },
-                    { id: 'I', row: 4, col: 3, length: 3, orientation: 'v', color: 'brown' },
-                    { id: 'J', row: 5, col: 0, length: 2, orientation: 'h', color: 'blue' }
-                ]
-            },
-            // Level 6 - Hard
-            {
-                vehicles: [
-                    { id: 'X', row: 2, col: 0, length: 2, orientation: 'h', color: 'red' },
-                    { id: 'A', row: 0, col: 0, length: 2, orientation: 'v', color: 'blue' },
-                    { id: 'B', row: 0, col: 1, length: 2, orientation: 'h', color: 'green' },
-                    { id: 'C', row: 0, col: 4, length: 3, orientation: 'v', color: 'yellow' },
-                    { id: 'D', row: 1, col: 1, length: 2, orientation: 'v', color: 'purple' },
-                    { id: 'E', row: 1, col: 3, length: 2, orientation: 'v', color: 'orange' },
-                    { id: 'F', row: 2, col: 2, length: 2, orientation: 'v', color: 'pink' },
-                    { id: 'G', row: 3, col: 0, length: 2, orientation: 'h', color: 'cyan' },
-                    { id: 'H', row: 3, col: 3, length: 3, orientation: 'v', color: 'lime' },
-                    { id: 'I', row: 4, col: 1, length: 2, orientation: 'v', color: 'brown' },
-                    { id: 'J', row: 5, col: 0, length: 2, orientation: 'h', color: 'blue' },
-                    { id: 'K', row: 5, col: 4, length: 2, orientation: 'h', color: 'green' }
-                ]
-            }
-        ];
     }
     
     validateAllLevels() {
