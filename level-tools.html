@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rush Hour - Level Tools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4ecca3;
+        }
+
+        h2 {
+            color: #4ecca3;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #4ecca3;
+            padding-bottom: 10px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-primary {
+            background: #4ecca3;
+            border-color: #4ecca3;
+            color: #1a1a2e;
+        }
+
+        .btn-primary:hover {
+            background: #3db892;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            border-color: #e74c3c;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .output {
+            background: #1a1a2e;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .success { color: #4ecca3; }
+        .error { color: #e74c3c; }
+        .warning { color: #f1c40f; }
+        .info { color: #3498db; }
+
+        .level-result {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .level-result.valid {
+            border-left: 4px solid #4ecca3;
+        }
+
+        .level-result.invalid {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .board-preview {
+            display: grid;
+            grid-template-columns: repeat(6, 40px);
+            grid-template-rows: repeat(6, 40px);
+            gap: 2px;
+            background: #2d3436;
+            padding: 5px;
+            border-radius: 8px;
+            margin: 10px 0;
+            width: fit-content;
+        }
+
+        .cell {
+            width: 40px;
+            height: 40px;
+            background: #636e72;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .cell.red { background: #e74c3c; }
+        .cell.blue { background: #3498db; }
+        .cell.green { background: #2ecc71; }
+        .cell.yellow { background: #f1c40f; color: #333; }
+        .cell.purple { background: #9b59b6; }
+        .cell.orange { background: #e67e22; }
+        .cell.pink { background: #e84393; }
+        .cell.cyan { background: #00cec9; }
+        .cell.lime { background: #88d8b0; color: #333; }
+        .cell.brown { background: #8b4513; }
+
+        .generated-levels {
+            margin-top: 20px;
+        }
+
+        .level-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .level-card h4 {
+            color: #4ecca3;
+            margin-bottom: 10px;
+        }
+
+        .level-code {
+            background: #1a1a2e;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .copy-btn {
+            margin-top: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #a0a0a0;
+        }
+
+        input, select {
+            background: #1a1a2e;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4ecca3;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Rush Hour - Level Tools</h1>
+        
+        <div class="tools-grid">
+            <!-- Level Tester Panel -->
+            <div class="panel">
+                <h2>🧪 Level Tester</h2>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="testCurrentLevels()">Test Game Levels</button>
+                    <button class="btn" onclick="clearOutput('testerOutput')">Clear</button>
+                </div>
+                <div id="testerOutput" class="output">
+                    Click "Test Game Levels" to validate all levels from game.js
+                </div>
+            </div>
+
+            <!-- Level Generator Panel -->
+            <div class="panel">
+                <h2>🎲 Level Generator</h2>
+                <div class="form-group">
+                    <label>Difficulty (min moves):</label>
+                    <input type="number" id="minMoves" value="5" min="1" max="50" style="width: 80px;">
+                    <span>to</span>
+                    <input type="number" id="maxMoves" value="15" min="1" max="50" style="width: 80px;">
+                </div>
+                <div class="form-group">
+                    <label>Number of vehicles (including red car):</label>
+                    <input type="number" id="numVehicles" value="8" min="4" max="15" style="width: 80px;">
+                </div>
+                <div class="form-group">
+                    <label>Number of levels to generate:</label>
+                    <input type="number" id="numLevels" value="3" min="1" max="10" style="width: 80px;">
+                </div>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="generateLevels()">Generate Levels</button>
+                    <button class="btn" onclick="clearOutput('generatorOutput')">Clear</button>
+                </div>
+                <div id="generatorOutput" class="output">
+                    Configure options and click "Generate Levels"
+                </div>
+            </div>
+        </div>
+
+        <!-- Generated Levels Display -->
+        <div class="panel generated-levels" id="generatedLevels" style="display: none;">
+            <h2>📋 Generated Levels</h2>
+            <div class="stats" id="generatorStats"></div>
+            <div id="levelCards"></div>
+            <div class="controls" style="margin-top: 15px;">
+                <button class="btn btn-primary" onclick="copyAllLevels()">Copy All Levels (for game.js)</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="levels.js"></script>
+    <script>
+        // ============================================
+        // RUSH HOUR SOLVER (same as in game.js)
+        // ============================================
+        class RushHourSolver {
+            static solve(vehicles) {
+                const startState = this.vehiclesToState(vehicles);
+                
+                if (this.isWinState(startState, vehicles)) {
+                    return [];
+                }
+                
+                const queue = [{ state: startState, moves: [] }];
+                const visited = new Set();
+                visited.add(this.stateToString(startState));
+                
+                while (queue.length > 0) {
+                    const { state, moves } = queue.shift();
+                    const possibleMoves = this.generateMoves(state, vehicles);
+                    
+                    for (const move of possibleMoves) {
+                        const newState = this.applyMove(state, move, vehicles);
+                        const stateStr = this.stateToString(newState);
+                        
+                        if (!visited.has(stateStr)) {
+                            visited.add(stateStr);
+                            const newMoves = [...moves, move];
+                            
+                            if (this.isWinState(newState, vehicles)) {
+                                return newMoves;
+                            }
+                            
+                            queue.push({ state: newState, moves: newMoves });
+                        }
+                    }
+                }
+                
+                return null;
+            }
+            
+            static vehiclesToState(vehicles) {
+                const state = {};
+                vehicles.forEach(v => {
+                    state[v.id] = { row: v.row, col: v.col };
+                });
+                return state;
+            }
+            
+            static stateToString(state) {
+                return JSON.stringify(state);
+            }
+            
+            static isWinState(state, vehicles) {
+                return state['X'].col === 4;
+            }
+            
+            static buildGrid(state, vehicles) {
+                const grid = Array(6).fill(null).map(() => Array(6).fill(null));
+                vehicles.forEach(v => {
+                    const pos = state[v.id];
+                    for (let i = 0; i < v.length; i++) {
+                        const row = v.orientation === 'h' ? pos.row : pos.row + i;
+                        const col = v.orientation === 'h' ? pos.col + i : pos.col;
+                        if (row >= 0 && row < 6 && col >= 0 && col < 6) {
+                            grid[row][col] = v.id;
+                        }
+                    }
+                });
+                return grid;
+            }
+            
+            static generateMoves(state, vehicles) {
+                const moves = [];
+                const grid = this.buildGrid(state, vehicles);
+                
+                vehicles.forEach(v => {
+                    const pos = state[v.id];
+                    const isHorizontal = v.orientation === 'h';
+                    
+                    if (isHorizontal) {
+                        for (let newCol = pos.col - 1; newCol >= 0; newCol--) {
+                            if (grid[pos.row][newCol] === null) {
+                                moves.push({ id: v.id, row: pos.row, col: newCol });
+                            } else break;
+                        }
+                        for (let newCol = pos.col + 1; newCol <= 6 - v.length; newCol++) {
+                            if (grid[pos.row][pos.col + v.length + (newCol - pos.col - 1)] === null) {
+                                moves.push({ id: v.id, row: pos.row, col: newCol });
+                            } else break;
+                        }
+                    } else {
+                        for (let newRow = pos.row - 1; newRow >= 0; newRow--) {
+                            if (grid[newRow][pos.col] === null) {
+                                moves.push({ id: v.id, row: newRow, col: pos.col });
+                            } else break;
+                        }
+                        for (let newRow = pos.row + 1; newRow <= 6 - v.length; newRow++) {
+                            if (grid[pos.row + v.length + (newRow - pos.row - 1)][pos.col] === null) {
+                                moves.push({ id: v.id, row: newRow, col: pos.col });
+                            } else break;
+                        }
+                    }
+                });
+                
+                return moves;
+            }
+            
+            static applyMove(state, move, vehicles) {
+                const newState = { ...state };
+                newState[move.id] = { row: move.row, col: move.col };
+                return newState;
+            }
+            
+            static validateLevel(level) {
+                const vehicles = level.vehicles;
+                const grid = Array(6).fill(null).map(() => Array(6).fill(null));
+                
+                for (const v of vehicles) {
+                    for (let i = 0; i < v.length; i++) {
+                        const row = v.orientation === 'h' ? v.row : v.row + i;
+                        const col = v.orientation === 'h' ? v.col + i : v.col;
+                        
+                        if (row < 0 || row >= 6 || col < 0 || col >= 6) {
+                            return { valid: false, error: `Vehicle ${v.id} is out of bounds at (${row}, ${col})` };
+                        }
+                        
+                        if (grid[row][col] !== null) {
+                            return { valid: false, error: `Vehicle ${v.id} overlaps with ${grid[row][col]} at (${row}, ${col})` };
+                        }
+                        
+                        grid[row][col] = v.id;
+                    }
+                }
+                
+                const redCar = vehicles.find(v => v.id === 'X');
+                if (!redCar) {
+                    return { valid: false, error: 'No red car (X) found' };
+                }
+                if (redCar.row !== 2 || redCar.orientation !== 'h') {
+                    return { valid: false, error: 'Red car must be horizontal on row 2' };
+                }
+                
+                const solution = this.solve(vehicles);
+                if (solution === null) {
+                    return { valid: false, error: 'Level is not solvable' };
+                }
+                
+                return { valid: true, solution, minMoves: solution.length };
+            }
+        }
+
+        // ============================================
+        // LEVEL GENERATOR
+        // ============================================
+        class LevelGenerator {
+            static colors = ['blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'cyan', 'lime', 'brown'];
+            static vehicleIds = 'ABCDEFGHIJKLMNOP'.split('');
+            
+            static generateLevel(targetMinMoves, targetMaxMoves, numVehicles) {
+                const maxAttempts = 500;
+                
+                for (let attempt = 0; attempt < maxAttempts; attempt++) {
+                    const vehicles = this.createRandomLayout(numVehicles);
+                    
+                    if (vehicles) {
+                        const validation = RushHourSolver.validateLevel({ vehicles });
+                        
+                        if (validation.valid && 
+                            validation.minMoves >= targetMinMoves && 
+                            validation.minMoves <= targetMaxMoves) {
+                            return {
+                                vehicles,
+                                minMoves: validation.minMoves,
+                                solution: validation.solution
+                            };
+                        }
+                    }
+                }
+                
+                return null;
+            }
+            
+            static createRandomLayout(numVehicles) {
+                const grid = Array(6).fill(null).map(() => Array(6).fill(null));
+                const vehicles = [];
+                
+                // Place red car (X) on row 2, random starting column (0-2)
+                const redCol = Math.floor(Math.random() * 3);
+                const redCar = {
+                    id: 'X',
+                    row: 2,
+                    col: redCol,
+                    length: 2,
+                    orientation: 'h',
+                    color: 'red'
+                };
+                
+                if (!this.placeVehicle(grid, redCar)) {
+                    return null;
+                }
+                vehicles.push(redCar);
+                
+                // Place other vehicles
+                let colorIndex = 0;
+                let idIndex = 0;
+                
+                for (let i = 1; i < numVehicles; i++) {
+                    const placed = this.tryPlaceRandomVehicle(grid, vehicles, idIndex, colorIndex);
+                    if (placed) {
+                        idIndex++;
+                        colorIndex = (colorIndex + 1) % this.colors.length;
+                    }
+                }
+                
+                // Must have at least a few vehicles besides red car
+                if (vehicles.length < 4) {
+                    return null;
+                }
+                
+                return vehicles;
+            }
+            
+            static tryPlaceRandomVehicle(grid, vehicles, idIndex, colorIndex) {
+                const maxTries = 50;
+                
+                for (let t = 0; t < maxTries; t++) {
+                    const length = Math.random() < 0.7 ? 2 : 3;
+                    const orientation = Math.random() < 0.5 ? 'h' : 'v';
+                    
+                    let row, col;
+                    if (orientation === 'h') {
+                        row = Math.floor(Math.random() * 6);
+                        col = Math.floor(Math.random() * (7 - length));
+                    } else {
+                        row = Math.floor(Math.random() * (7 - length));
+                        col = Math.floor(Math.random() * 6);
+                    }
+                    
+                    const vehicle = {
+                        id: this.vehicleIds[idIndex],
+                        row,
+                        col,
+                        length,
+                        orientation,
+                        color: this.colors[colorIndex]
+                    };
+                    
+                    if (this.canPlace(grid, vehicle)) {
+                        this.placeVehicle(grid, vehicle);
+                        vehicles.push(vehicle);
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+            
+            static canPlace(grid, vehicle) {
+                for (let i = 0; i < vehicle.length; i++) {
+                    const row = vehicle.orientation === 'h' ? vehicle.row : vehicle.row + i;
+                    const col = vehicle.orientation === 'h' ? vehicle.col + i : vehicle.col;
+                    
+                    if (row < 0 || row >= 6 || col < 0 || col >= 6) {
+                        return false;
+                    }
+                    if (grid[row][col] !== null) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            
+            static placeVehicle(grid, vehicle) {
+                if (!this.canPlace(grid, vehicle)) {
+                    return false;
+                }
+                
+                for (let i = 0; i < vehicle.length; i++) {
+                    const row = vehicle.orientation === 'h' ? vehicle.row : vehicle.row + i;
+                    const col = vehicle.orientation === 'h' ? vehicle.col + i : vehicle.col;
+                    grid[row][col] = vehicle.id;
+                }
+                return true;
+            }
+        }
+
+        // ============================================
+        // UI FUNCTIONS
+        // ============================================
+        
+        // Levels are loaded from levels.js (included via script tag)
+        // RUSH_HOUR_LEVELS is defined there
+
+        let generatedLevelsData = [];
+
+        function testCurrentLevels() {
+            const output = document.getElementById('testerOutput');
+            output.innerHTML = '';
+            
+            if (typeof RUSH_HOUR_LEVELS === 'undefined') {
+                output.innerHTML = '<span class="error">Error: levels.js not loaded. Make sure levels.js is in the same folder.</span>';
+                return;
+            }
+            
+            let validCount = 0;
+            let invalidCount = 0;
+            
+            RUSH_HOUR_LEVELS.forEach((level, index) => {
+                const result = RushHourSolver.validateLevel(level);
+                
+                const div = document.createElement('div');
+                div.className = `level-result ${result.valid ? 'valid' : 'invalid'}`;
+                
+                if (result.valid) {
+                    validCount++;
+                    div.innerHTML = `<span class="success">✓ Level ${index + 1}</span>: Valid (${result.minMoves} moves minimum)`;
+                } else {
+                    invalidCount++;
+                    div.innerHTML = `<span class="error">✗ Level ${index + 1}</span>: ${result.error}`;
+                }
+                
+                // Add board preview
+                const preview = createBoardPreview(level.vehicles);
+                div.appendChild(preview);
+                
+                output.appendChild(div);
+            });
+            
+            // Summary
+            const summary = document.createElement('div');
+            summary.style.marginTop = '15px';
+            summary.style.padding = '10px';
+            summary.style.background = 'rgba(255,255,255,0.1)';
+            summary.style.borderRadius = '5px';
+            summary.innerHTML = `
+                <strong>Summary:</strong><br>
+                <span class="success">Valid: ${validCount}</span> | 
+                <span class="error">Invalid: ${invalidCount}</span> | 
+                Total: ${RUSH_HOUR_LEVELS.length}
+            `;
+            output.appendChild(summary);
+        }
+
+        function createBoardPreview(vehicles) {
+            const grid = Array(6).fill(null).map(() => Array(6).fill(null));
+            const colorMap = {};
+            
+            vehicles.forEach(v => {
+                colorMap[v.id] = v.color;
+                for (let i = 0; i < v.length; i++) {
+                    const row = v.orientation === 'h' ? v.row : v.row + i;
+                    const col = v.orientation === 'h' ? v.col + i : v.col;
+                    if (row >= 0 && row < 6 && col >= 0 && col < 6) {
+                        grid[row][col] = v.id;
+                    }
+                }
+            });
+            
+            const boardDiv = document.createElement('div');
+            boardDiv.className = 'board-preview';
+            
+            for (let row = 0; row < 6; row++) {
+                for (let col = 0; col < 6; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    if (grid[row][col]) {
+                        cell.classList.add(colorMap[grid[row][col]]);
+                        cell.textContent = grid[row][col];
+                    }
+                    boardDiv.appendChild(cell);
+                }
+            }
+            
+            return boardDiv;
+        }
+
+        function generateLevels() {
+            const minMoves = parseInt(document.getElementById('minMoves').value);
+            const maxMoves = parseInt(document.getElementById('maxMoves').value);
+            const numVehicles = parseInt(document.getElementById('numVehicles').value);
+            const numLevels = parseInt(document.getElementById('numLevels').value);
+            
+            const output = document.getElementById('generatorOutput');
+            output.innerHTML = '<span class="info">Generating levels... This may take a moment.</span>\n';
+            
+            generatedLevelsData = [];
+            
+            setTimeout(() => {
+                let successCount = 0;
+                let attempts = 0;
+                const maxTotalAttempts = numLevels * 100;
+                
+                while (successCount < numLevels && attempts < maxTotalAttempts) {
+                    attempts++;
+                    const result = LevelGenerator.generateLevel(minMoves, maxMoves, numVehicles);
+                    
+                    if (result) {
+                        successCount++;
+                        generatedLevelsData.push(result);
+                        output.innerHTML += `<span class="success">✓ Generated level ${successCount}</span> (${result.minMoves} moves, ${result.vehicles.length} vehicles)\n`;
+                    }
+                }
+                
+                if (successCount < numLevels) {
+                    output.innerHTML += `\n<span class="warning">⚠ Only generated ${successCount}/${numLevels} levels. Try adjusting parameters.</span>\n`;
+                }
+                
+                output.innerHTML += `\n<span class="info">Total attempts: ${attempts}</span>`;
+                
+                displayGeneratedLevels();
+            }, 100);
+        }
+
+        function displayGeneratedLevels() {
+            if (generatedLevelsData.length === 0) {
+                document.getElementById('generatedLevels').style.display = 'none';
+                return;
+            }
+            
+            document.getElementById('generatedLevels').style.display = 'block';
+            
+            // Stats
+            const avgMoves = (generatedLevelsData.reduce((sum, l) => sum + l.minMoves, 0) / generatedLevelsData.length).toFixed(1);
+            const avgVehicles = (generatedLevelsData.reduce((sum, l) => sum + l.vehicles.length, 0) / generatedLevelsData.length).toFixed(1);
+            
+            document.getElementById('generatorStats').innerHTML = `
+                <div class="stat">
+                    <div class="stat-value">${generatedLevelsData.length}</div>
+                    <div class="stat-label">Levels</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">${avgMoves}</div>
+                    <div class="stat-label">Avg Moves</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">${avgVehicles}</div>
+                    <div class="stat-label">Avg Vehicles</div>
+                </div>
+            `;
+            
+            // Level cards
+            const cardsContainer = document.getElementById('levelCards');
+            cardsContainer.innerHTML = '';
+            
+            generatedLevelsData.forEach((level, index) => {
+                const card = document.createElement('div');
+                card.className = 'level-card';
+                
+                const code = formatLevelCode(level.vehicles, index + 1, level.minMoves);
+                
+                card.innerHTML = `
+                    <h4>Level ${index + 1} (${level.minMoves} moves, ${level.vehicles.length} vehicles)</h4>
+                `;
+                
+                card.appendChild(createBoardPreview(level.vehicles));
+                
+                const codeDiv = document.createElement('div');
+                codeDiv.className = 'level-code';
+                codeDiv.textContent = code;
+                card.appendChild(codeDiv);
+                
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'btn copy-btn';
+                copyBtn.textContent = '📋 Copy';
+                copyBtn.onclick = () => copyToClipboard(code);
+                card.appendChild(copyBtn);
+                
+                cardsContainer.appendChild(card);
+            });
+        }
+
+        function formatLevelCode(vehicles, levelNum, minMoves) {
+            let code = `// Level ${levelNum} (${minMoves} moves)\n{\n    vehicles: [\n`;
+            
+            vehicles.forEach((v, i) => {
+                code += `        { id: '${v.id}', row: ${v.row}, col: ${v.col}, length: ${v.length}, orientation: '${v.orientation}', color: '${v.color}' }`;
+                code += i < vehicles.length - 1 ? ',\n' : '\n';
+            });
+            
+            code += '    ]\n}';
+            return code;
+        }
+
+        function copyAllLevels() {
+            let code = 'return [\n';
+            
+            generatedLevelsData.forEach((level, index) => {
+                code += '    ' + formatLevelCode(level.vehicles, index + 1, level.minMoves).replace(/\n/g, '\n    ');
+                code += index < generatedLevelsData.length - 1 ? ',\n' : '\n';
+            });
+            
+            code += '];';
+            
+            copyToClipboard(code);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('Copied to clipboard!');
+            });
+        }
+
+        function clearOutput(elementId) {
+            document.getElementById(elementId).innerHTML = '';
+        }
+    </script>
+</body>
+</html>
